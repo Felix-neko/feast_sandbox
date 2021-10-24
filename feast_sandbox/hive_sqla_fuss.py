@@ -10,7 +10,7 @@ if __name__ == "__main__":
     Base = automap_base()
 
     engine = create_engine('hive://localhost:10000/hell_db')
-    conn = engine.connect();
+    conn = engine.connect()
     logs = Table('daemon', MetaData(bind=engine), autoload=True)
     print(select([func.count('*')], from_obj=logs).scalar())
 
