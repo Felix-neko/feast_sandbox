@@ -28,5 +28,3 @@ if __name__ == "__main__":
     print(stmt)
 
     print(conn.execute(stmt).all())
-
-ubun
