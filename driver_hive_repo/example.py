@@ -16,7 +16,6 @@ from feast_hive import HiveSource
 # )
 
 driver_hourly_stats = HiveSource(
-    # table='driver_stats',
     query = """
     SELECT event_timestamp, driver_id, conv_rate, acc_rate, avg_daily_trips, created_timestamp 
     FROM driver_stat
