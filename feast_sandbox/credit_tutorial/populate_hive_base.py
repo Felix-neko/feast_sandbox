@@ -55,6 +55,6 @@ if __name__ == "__main__":
     engine = create_engine(conn_string)
     conn = engine.connect()
 
-    populate_table(zipcode_table_df, "zipcode_data2", conn, engine)
-    populate_table(credit_history_df, "credit_history2", conn, engine)
+    populate_table(zipcode_table_df, "zipcode_data", conn, engine)
+    populate_table(credit_history_df, "credit_history", conn, engine)
 
