@@ -1,3 +1,7 @@
+"""
+Вспоминаем, как подключаться к сырым табличкам...
+"""
+
 from sqlalchemy import select, func
 from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import MetaData, Table
@@ -17,10 +21,12 @@ if __name__ == "__main__":
     Base.prepare(engine, reflect=True)
     daemon_tbl = Base.metadata.tables['daemon']
 
-    # stmt = insert(daemon_tbl).values(id=1, name="Leviathan", rank=30)
-    # print(stmt)
-    # compiled = stmt.compile()
-    # conn.execute(stmt)
+    stmt = insert(daemon_tbl).values(
+        [{"id": 1, "name": "Leviathan", "rank": 30}, {"id": 2, "name": "Sathanail", "rank": 31},
+         {"id": 3, "name": "Belzebub", "rank": 32}, {"id": 4, "name": "Belial", "rank": 33}])
+    print(stmt)
+    compiled = stmt.compile()
+    conn.execute(stmt)
 
     # print(daemon_tbl)
 

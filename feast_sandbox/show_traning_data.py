@@ -12,9 +12,9 @@ if __name__ == "__main__":
         {
             "driver_id": [1001, 1002, 1003],
             "event_timestamp": [
-                datetime.now() - timedelta(days=1),
-                datetime.now() - timedelta(days=1),
-                datetime.now() - timedelta(days=1),
+                datetime.now() - timedelta(days=2),
+                datetime.now() - timedelta(days=2),
+                datetime.now() - timedelta(days=2),
             ],
         }
     )
