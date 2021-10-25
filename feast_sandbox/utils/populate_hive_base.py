@@ -20,6 +20,7 @@ driver_stat_tbl = Table("driver_stat", metadata_obj,
 
 
 def populate_hive_base(conn_string: str, drivers_dataframe: pd.DataFrame):
+    #TODO: check if base already populated
     engine = create_engine(conn_string)
     conn = engine.connect()
     metadata_obj.create_all(engine)

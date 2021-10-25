@@ -2,7 +2,7 @@
 name = "feast_sandbox"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Felix Neko <felix-neko@list.ru>"]
 
 [tool.poetry.dependencies]
 python = "3.8"
@@ -16,6 +16,7 @@ sqlacodegen = "^2.3.0"
 scikit-learn = "^1.0"
 parquet-tools = "^0.2.9"
 google-cloud-bigquery = {extras = ["bqstorage", "pandas"], version = "^2.28.1"}
+feast-hive = "^0.1.2"
 
 
 [build-system]

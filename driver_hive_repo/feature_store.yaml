@@ -1,0 +1,13 @@
+project: driver_hive_repo
+registry: data/registry.db
+provider: local
+
+offline_store:
+    type: feast_hive.HiveOfflineStore
+    host: localhost
+    port: 10000
+    database: driver_tutorial
+
+
+online_store:
+    path: data/online_store.db
