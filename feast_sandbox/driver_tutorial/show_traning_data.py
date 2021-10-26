@@ -3,10 +3,13 @@ from feast import FeatureStore
 import pandas as pd
 from datetime import datetime, timedelta
 
+from pathlib import Path
+cur_dir_path = Path(__file__).absolute().parent
+
 if __name__ == "__main__":
     # The entity dataframe is the dataframe we want to enrich with feature values
 
-    fs = FeatureStore("../feature_repo")
+    fs = FeatureStore(str(cur_dir_path.parent.parent / "repos/driver_parquet_repo"))
 
     entity_df = pd.DataFrame.from_dict(
         {
@@ -19,9 +22,7 @@ if __name__ == "__main__":
         }
     )
 
-    store = FeatureStore(repo_path="../feature_repo")
-
-    training_df = store.get_historical_features(
+    training_df = fs.get_historical_features(
         entity_df=entity_df,
         features=[
             "driver_hourly_stats:conv_rate",

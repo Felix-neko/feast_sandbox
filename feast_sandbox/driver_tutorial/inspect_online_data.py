@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 
 if __name__ == "__main__":
-    con = sqlite3.connect("../feature_repo/data/online_store.db")
+    con = sqlite3.connect("../repos/feature_repo/data/online_store.db")
     print("\n--- Schema of online store ---")
     print(
         pd.read_sql_query(

@@ -1,7 +1,7 @@
 from pprint import pprint
 from feast import FeatureStore
 
-store = FeatureStore(repo_path="../feature_repo")
+store = FeatureStore(repo_path="../repos/feature_repo")
 
 feature_vector = store.get_online_features(
     features=[

@@ -2,14 +2,17 @@ import pandas as pd
 import feast
 from joblib import load
 
+from pathlib import Path
+cur_dir_path = Path(__file__).absolute().parent
+
 
 class DriverRankingModel:
     def __init__(self):
         # Load model
-        self.model = load("driver_model.bin")
+        self.model = load("../driver_model.bin")
 
         # Set up feature store
-        self.fs = feast.FeatureStore(repo_path="../driver_hive_repo")
+        self.fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_parquet_repo"))
 
     def predict(self, driver_ids):
         # Read features from Feast

@@ -4,13 +4,16 @@ from joblib import dump
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
+from pathlib import Path
+cur_dir_path = Path(__file__).absolute().parent
+
 if __name__ == "__main__":
     # Load driver order data
-    orders = pd.read_csv("utils/driver_orders.csv", sep="\t")
+    orders = pd.read_csv("driver_orders.csv", sep="\t")
     orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
 
     # Connect to your local feature store
-    fs = feast.FeatureStore(repo_path="../driver_hive_repo")
+    fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent /"repos/driver_parquet_repo"))
 
     # Retrieve training data from BigQuery
     training_df = fs.get_historical_features(
@@ -31,4 +34,4 @@ if __name__ == "__main__":
     reg.fit(train_X[sorted(train_X)], train_Y)
 
     # Save model
-    dump(reg, "driver_model.bin")
+    dump(reg, "../driver_model.bin")
