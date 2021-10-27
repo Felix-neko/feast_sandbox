@@ -205,6 +205,11 @@ dill = ">=0.3.0,<0.4.0"
 fastapi = ">=0.68.0"
 fastavro = ">=1.1.0"
 google-api-core = ">=1.23.0"
+google-cloud-bigquery = {version = ">=2.0", optional = true, markers = "extra == \"gcp\""}
+google-cloud-bigquery-storage = {version = ">=2.0.0", optional = true, markers = "extra == \"gcp\""}
+google-cloud-core = {version = ">=1.4.0,<1.5.0", optional = true, markers = "extra == \"gcp\""}
+google-cloud-datastore = {version = ">=2.1", optional = true, markers = "extra == \"gcp\""}
+google-cloud-storage = {version = ">=1.34", optional = true, markers = "extra == \"gcp\""}
 googleapis-common-protos = ">=1.52.0,<1.53.0"
 grpcio = ">=1.34.0"
 Jinja2 = ">=2.0.0"
@@ -239,39 +244,43 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "google-api-core"
-version = "2.1.1"
+version = "1.31.2"
 description = "Google API client core library"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
 
 [package.dependencies]
-google-auth = ">=1.25.0,<3.0dev"
+google-auth = ">=1.25.0,<2.0dev"
 googleapis-common-protos = ">=1.6.0,<2.0dev"
-grpcio = {version = ">=1.33.2,<2.0dev", optional = true, markers = "extra == \"grpc\""}
+grpcio = {version = ">=1.29.0,<2.0dev", optional = true, markers = "extra == \"grpc\""}
+packaging = ">=14.3"
 protobuf = ">=3.12.0"
+pytz = "*"
 requests = ">=2.18.0,<3.0.0dev"
+six = ">=1.13.0"
 
 [package.extras]
-grpc = ["grpcio (>=1.33.2,<2.0dev)"]
+grpc = ["grpcio (>=1.29.0,<2.0dev)"]
 grpcgcp = ["grpcio-gcp (>=0.2.2)"]
 grpcio-gcp = ["grpcio-gcp (>=0.2.2)"]
 
 [[package]]
 name = "google-auth"
-version = "2.3.0"
+version = "1.35.0"
 description = "Google Authentication Library"
 category = "main"
 optional = false
-python-versions = ">= 3.6"
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
 
 [package.dependencies]
 cachetools = ">=2.0.0,<5.0"
 pyasn1-modules = ">=0.2.1"
-rsa = ">=3.1.4,<5"
+rsa = {version = ">=3.1.4,<5", markers = "python_version >= \"3.6\""}
+six = ">=1.9.0"
 
 [package.extras]
-aiohttp = ["aiohttp (>=3.6.2,<4.0.0dev)", "requests (>=2.20.0,<3.0.0dev)"]
+aiohttp = ["requests (>=2.20.0,<3.0.0dev)", "aiohttp (>=3.6.2,<4.0.0dev)"]
 pyopenssl = ["pyopenssl (>=20.0.0)"]
 reauth = ["pyu2f (>=0.1.5)"]
 
@@ -327,18 +336,46 @@ tests = ["freezegun"]
 
 [[package]]
 name = "google-cloud-core"
-version = "2.1.0"
+version = "1.4.4"
 description = "Google Cloud API client core library"
+category = "main"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
+
+[package.dependencies]
+google-api-core = ">=1.21.0,<2.0.0dev"
+six = ">=1.12.0"
+
+[package.extras]
+grpc = ["grpcio (>=1.8.2,<2.0dev)"]
+
+[[package]]
+name = "google-cloud-datastore"
+version = "2.3.0"
+description = "Google Cloud Datastore API client library"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-google-api-core = ">=1.21.0,<3.0.0dev"
-google-auth = ">=1.24.0,<3.0dev"
+google-api-core = {version = ">=1.22.2,<3.0.0dev", extras = ["grpc"]}
+google-cloud-core = ">=1.4.0,<3.0.0dev"
+libcst = ">=0.2.5"
+proto-plus = ">=1.4.0"
 
-[package.extras]
-grpc = ["grpcio (>=1.8.2,<2.0dev)"]
+[[package]]
+name = "google-cloud-storage"
+version = "1.40.0"
+description = "Google Cloud Storage API client library"
+category = "main"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
+
+[package.dependencies]
+google-auth = ">=1.11.0,<2.0dev"
+google-cloud-core = ">=1.4.1,<2.0dev"
+google-resumable-media = ">=1.3.0,<2.0dev"
+requests = ">=2.18.0,<3.0.0dev"
 
 [[package]]
 name = "google-crc32c"
@@ -353,14 +390,15 @@ testing = ["pytest"]
 
 [[package]]
 name = "google-resumable-media"
-version = "2.0.3"
+version = "1.3.3"
 description = "Utilities for Google Media Downloads and Resumable Uploads"
 category = "main"
 optional = false
-python-versions = ">= 3.6"
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
 
 [package.dependencies]
-google-crc32c = ">=1.0,<2.0dev"
+google-crc32c = {version = ">=1.0,<2.0dev", markers = "python_version >= \"3.5\""}
+six = ">=1.4.0"
 
 [package.extras]
 aiohttp = ["aiohttp (>=3.6.2,<4.0.0dev)"]
@@ -1265,7 +1303,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.8"
-content-hash = "87e016c3b54753c8b8a6645469fdd7ae2f5a558a5ad84cf85d90ac1e8f6267ec"
+content-hash = "e78ea4b7cdd8b9a8d0b7a4a8436d772e9379b6fe7795dd3afbb265e7e6cbf699"
 
 [metadata.files]
 anyio = [
@@ -1356,12 +1394,12 @@ future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
 ]
 google-api-core = [
-    {file = "google-api-core-2.1.1.tar.gz", hash = "sha256:646d9399c3c478fe475cfe523e84572ab31a340814ea977fb2774eca5a6549a2"},
-    {file = "google_api_core-2.1.1-py2.py3-none-any.whl", hash = "sha256:39ae7ca2208090c2942ebe1b38ca2928441a14b795c725717d38d7e30adb5fbf"},
+    {file = "google-api-core-1.31.2.tar.gz", hash = "sha256:8500aded318fdb235130bf183c726a05a9cb7c4b09c266bd5119b86cdb8a4d10"},
+    {file = "google_api_core-1.31.2-py2.py3-none-any.whl", hash = "sha256:384459a0dc98c1c8cd90b28dc5800b8705e0275a673a7144a513ae80fc77950b"},
 ]
 google-auth = [
-    {file = "google-auth-2.3.0.tar.gz", hash = "sha256:2800f6dfad29c6ced5faf9ca0c38ea8ba1ebe2559b10c029bd021e3de3301627"},
-    {file = "google_auth-2.3.0-py2.py3-none-any.whl", hash = "sha256:91892727c09cf5d090c391936a8e67ef5b9a9794c2f426b3d0ceedddbcc0ef50"},
+    {file = "google-auth-1.35.0.tar.gz", hash = "sha256:b7033be9028c188ee30200b204ea00ed82ea1162e8ac1df4aa6ded19a191d88e"},
+    {file = "google_auth-1.35.0-py2.py3-none-any.whl", hash = "sha256:997516b42ecb5b63e8d80f5632c1a61dddf41d2a4c2748057837e06e00014258"},
 ]
 google-cloud-bigquery = [
     {file = "google-cloud-bigquery-2.28.1.tar.gz", hash = "sha256:0e2353d97e5292dc8ce54447b712fb9e89496e714b5cacfc3d536614d1c461dc"},
@@ -1372,8 +1410,16 @@ google-cloud-bigquery-storage = [
     {file = "google_cloud_bigquery_storage-2.9.1-py2.py3-none-any.whl", hash = "sha256:7c23254224180c856110c26d1f77f2fc43483e2c20e1b7ab3026dde9eb085acc"},
 ]
 google-cloud-core = [
-    {file = "google-cloud-core-2.1.0.tar.gz", hash = "sha256:35a1f5f02a86e0fa2e28c669f0db4a76d928671a28fbbbb493ab59ba9d1cb9a9"},
-    {file = "google_cloud_core-2.1.0-py2.py3-none-any.whl", hash = "sha256:8d5fed11731dae8bc8656a2c9fa8ff17bdfdfd083cba97569324e35b94e7e002"},
+    {file = "google-cloud-core-1.4.4.tar.gz", hash = "sha256:5bf32a3476412bbbf37660d73c46a7217a0db7913d4f4db6490b56d7a93f1d86"},
+    {file = "google_cloud_core-1.4.4-py2.py3-none-any.whl", hash = "sha256:1445266e70e3ea068915259bfa9db2736076d01ac4c60b919c11ef75ba831adf"},
+]
+google-cloud-datastore = [
+    {file = "google-cloud-datastore-2.3.0.tar.gz", hash = "sha256:483c02974f03b6081030f6cd9777aa0279b36b99bdd9f3591a05bed6a1566a5f"},
+    {file = "google_cloud_datastore-2.3.0-py2.py3-none-any.whl", hash = "sha256:162ed7d93eaf9bf2bac55f324de19781bf626f06e0dd839a65f9480ee37c98cb"},
+]
+google-cloud-storage = [
+    {file = "google-cloud-storage-1.40.0.tar.gz", hash = "sha256:560f7d112dce319a39b06c35cf53ae156ef42dfb213fc633c09aefaae7c060ec"},
+    {file = "google_cloud_storage-1.40.0-py2.py3-none-any.whl", hash = "sha256:620ce1a7369e109515d5cf4c6e783afcb321f2d3a14faff394c929e00f5a35ca"},
 ]
 google-crc32c = [
     {file = "google-crc32c-1.3.0.tar.gz", hash = "sha256:276de6273eb074a35bc598f8efbc00c7869c5cf2e29c90748fccc8c898c244df"},
@@ -1421,8 +1467,8 @@ google-crc32c = [
     {file = "google_crc32c-1.3.0-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:7f6fe42536d9dcd3e2ffb9d3053f5d05221ae3bbcefbe472bdf2c71c793e3183"},
 ]
 google-resumable-media = [
-    {file = "google-resumable-media-2.0.3.tar.gz", hash = "sha256:b4b4709d04a6a03cbec746c2b5cb18f1f9878bf1ef3cd61908842a3d94c20471"},
-    {file = "google_resumable_media-2.0.3-py2.py3-none-any.whl", hash = "sha256:efe23e22bc9838630f0fd185e21de503c731a726e66da90c1572653d8480e8e4"},
+    {file = "google-resumable-media-1.3.3.tar.gz", hash = "sha256:ce38555d250bd70b0c2598bf61e99003cb8c569b0176ec0e3f38b86f9ffff581"},
+    {file = "google_resumable_media-1.3.3-py2.py3-none-any.whl", hash = "sha256:092f39153cd67a4e409924edf08129f43cc72e630a1eb22abec93e80155df4ba"},
 ]
 googleapis-common-protos = [
     {file = "googleapis-common-protos-1.52.0.tar.gz", hash = "sha256:560716c807117394da12cecb0a54da5a451b5cf9866f1d37e9a5e2329a665351"},
