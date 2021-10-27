@@ -1,6 +1,7 @@
 import pandas as pd
 import feast
 from joblib import load
+from datetime import datetime
 
 from pathlib import Path
 cur_dir_path = Path(__file__).absolute().parent
@@ -13,6 +14,8 @@ class DriverRankingModel:
 
         # Set up feature store
         self.fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_hive_repo"))
+
+        # self.fs.materialize_incremental(datetime.now())
 
     def predict(self, driver_ids):
         # Read features from Feast
