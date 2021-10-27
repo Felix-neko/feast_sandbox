@@ -12,7 +12,7 @@ class DriverRankingModel:
         self.model = load("../driver_model.bin")
 
         # Set up feature store
-        self.fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_parquet_repo"))
+        self.fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_hive_repo"))
 
     def predict(self, driver_ids):
         # Read features from Feast

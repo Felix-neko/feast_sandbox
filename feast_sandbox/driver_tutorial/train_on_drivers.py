@@ -13,7 +13,7 @@ if __name__ == "__main__":
     orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
 
     # Connect to your local feature store
-    fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent /"repos/driver_parquet_repo"))
+    fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_hive_repo"))
 
     # Retrieve training data from BigQuery
     training_df = fs.get_historical_features(
@@ -29,6 +29,7 @@ if __name__ == "__main__":
     target = "trip_completed"
 
     reg = LinearRegression()
+    print(training_df.columns)
     train_X = training_df[training_df.columns.drop(target).drop("event_timestamp")]
     train_Y = training_df.loc[:, target]
     reg.fit(train_X[sorted(train_X)], train_Y)

@@ -5,6 +5,7 @@ from feast_sandbox.credit_tutorial.credit_model import CreditScoringModel
 
 cur_dir_path = Path(__file__).absolute().parent
 
+
 if __name__ == "__main__":
     # Get historic loan data
     loans = pd.read_parquet(cur_dir_path.parent.parent / "repos/credit_parquet_repo/loan_table.parquet")
