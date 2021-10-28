@@ -13,7 +13,7 @@ if __name__ == "__main__":
     orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
 
     # Connect to your local feature store
-    fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_hive_repo"))
+    fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_bigquery_repo"))
 
     # Retrieve training data from BigQuery
     training_df = fs.get_historical_features(

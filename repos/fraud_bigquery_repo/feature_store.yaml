@@ -1,0 +1,6 @@
+project: fraud_tutorial
+registry: gs://feast_fraud_bkt/data/registry.db
+provider: gcp
+offline_store:
+  type: bigquery
+  dataset: feast_fraud_ds
