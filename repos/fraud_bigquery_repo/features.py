@@ -9,7 +9,7 @@ user_entity = Entity(
 )
 
 # Add a FeatureView based on our new table
-driver_stats_fv = FeatureView(
+user_transactions_count_fv = FeatureView(
     name="user_transaction_count_7d",
     entities=["user_id"],
     ttl=timedelta(weeks=1),

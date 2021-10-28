@@ -96,7 +96,7 @@ if __name__ == "__main__":
     #     earliest_aggregation_end_date=datetime.now() - timedelta(days=7), interval=timedelta(days=1), num_iterations=8)
 
     # Initialize a FeatureStore with our current repository's configurations
-    store = FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/fraud_bigquery_repo"))
+    store = FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/fraud_hive_repo"))
 
     # Get training data
     now = datetime.now()
@@ -142,8 +142,6 @@ if __name__ == "__main__":
     # Train a simple SVC model
     model = LinearRegression()
     model.fit(X, y)
-
-    # Get first two rows of training data
 
     # Make a test prediction
     joblib.dump(model, "model.joblib")

@@ -13,3 +13,6 @@ if __name__ == "__main__":
                                 str(fraud_parquet_repo_path / "user_has_fraudulent_transactions.parquet"))
     download_bigquery_dataframe("feast-oss.fraud_tutorial.user_account_features",
                                 str(fraud_parquet_repo_path / "user_account_features.parquet"))
+
+    download_bigquery_dataframe("integral-server-329913.feast_fraud_ds.user_count_transactions_7d",
+                                str(fraud_parquet_repo_path / "user_count_transactions_7d.parquet"))
