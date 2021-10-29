@@ -8,7 +8,8 @@ if __name__ == "__main__":
     cur_dir_path = Path(__file__).parent
     fraud_parquet_repo_path = cur_dir_path.parent.parent / "repos/fraud_parquet_repo"
     download_bigquery_dataframe("feast-oss.fraud_tutorial.transactions",
-                                str(fraud_parquet_repo_path / "transactions.parquet"))
+                                str(fraud_parquet_repo_path / "transactions.parquet"),
+                                field_name_map={"timestamp": "feature_timestamp"})
     download_bigquery_dataframe("feast-oss.fraud_tutorial.user_has_fraudulent_transactions",
                                 str(fraud_parquet_repo_path / "user_has_fraudulent_transactions.parquet"))
     download_bigquery_dataframe("feast-oss.fraud_tutorial.user_account_features",

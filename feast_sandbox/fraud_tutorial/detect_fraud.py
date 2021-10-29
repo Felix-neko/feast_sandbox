@@ -102,17 +102,42 @@ if __name__ == "__main__":
     now = datetime.now()
     two_days_ago = datetime.now() - timedelta(days=2)
 
-    training_data = store.get_historical_features(
-        entity_df=f"""
+    # training_data = store.get_historical_features(
+    #     entity_df=f"""
+    #     select
+    #         src_account as user_id,
+    #         timestamp,
+    #         is_fraud
+    #     from
+    #         feast-oss.fraud_tutorial.transactions
+    #     where
+    #         timestamp between timestamp('{two_days_ago.isoformat()}')
+    #         and timestamp('{now.isoformat()}')""",
+    #     features=[
+    #         "user_transaction_count_7d:transaction_count_7d",
+    #         "user_account_features:credit_score",
+    #         "user_account_features:account_age_days",
+    #         "user_account_features:user_has_2fa_installed",
+    #         "user_has_fraudulent_transactions:user_has_fraudulent_transactions_7d"
+    #     ],
+    #     full_feature_names=True
+    # ).to_df()
+
+    # print(training_data.head())
+
+    entity_df_selection_str = f"""
         select 
             src_account as user_id,
-            timestamp,
+            feature_timestamp,
             is_fraud
         from
-            feast-oss.fraud_tutorial.transactions
+            transactions
         where
-            timestamp between timestamp('{two_days_ago.isoformat()}') 
-            and timestamp('{now.isoformat()}')""",
+            feature_timestamp >= unix_timestamp('2021-10-28 00:27:07')
+        """
+
+    training_data = store.get_historical_features(
+        entity_df=entity_df_selection_str,
         features=[
             "user_transaction_count_7d:transaction_count_7d",
             "user_account_features:credit_score",
@@ -123,11 +148,12 @@ if __name__ == "__main__":
         full_feature_names=True
     ).to_df()
 
-    # print(training_data.head())
-
+    print("historical features dataframe size:", training_data.shape)
 
     # Drop stray nulls
     training_data.dropna(inplace=True)
+
+    print("historical features dataframe size w/o NA:", training_data.shape)
 
     # Select training matrices
     X = training_data[[

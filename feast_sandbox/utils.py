@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict
 
 from pathlib import Path
 
@@ -41,7 +41,8 @@ def populate_table(df: pd.DataFrame, table_name: str, conn: Connection, engine: 
     print("Table complete")
 
 
-def download_bigquery_dataframe(table_name: str, dump_path: Optional[str] = None) -> pd.DataFrame :
+def download_bigquery_dataframe(table_name: str, dump_path: Optional[str] = None,
+                                field_name_map: Optional[Dict[str, str]] = None) -> pd.DataFrame :
     bqclient = bigquery.Client()
     # Download query results.
     query_string = f"SELECT * FROM {table_name}"
@@ -51,6 +52,9 @@ def download_bigquery_dataframe(table_name: str, dump_path: Optional[str] = None
             # API is used by default.
             create_bqstorage_client=True,
         )
+
+    if field_name_map is not None:
+        dataframe.rename(columns=field_name_map, inplace=True)
     if dump_path is not None:
         with open(dump_path, "wb") as out_file:
             out_file.write(dataframe.to_parquet())

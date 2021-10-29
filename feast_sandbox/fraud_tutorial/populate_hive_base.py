@@ -21,5 +21,3 @@ if __name__ == "__main__":
         table_name = ppath.name.split(".")[0]
         df = pd.read_parquet(ppath)
         populate_table(df, table_name, conn, engine)
-
-
