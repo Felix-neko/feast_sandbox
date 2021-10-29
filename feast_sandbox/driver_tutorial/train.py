@@ -12,16 +12,20 @@ if __name__ == "__main__":
     orders = pd.read_csv("driver_orders.csv", sep="\t")
     orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
 
-    # Connect to your local feature store
-    fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_bigquery_repo"))
 
+
+    # Connect to your local feature store
+    fs = feast.FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/driver_hive_repo"))
+
+    # orders = orders[orders.columns.drop("trip_completed")]
     # Retrieve training data from BigQuery
     training_df = fs.get_historical_features(
-        entity_df=orders,
+        entity_df=orders[orders.columns.drop("trip_completed")],
         features=[
             "driver_hourly_stats:conv_rate",
             "driver_hourly_stats:acc_rate",
             "driver_hourly_stats:avg_daily_trips",
+            # "driver_hourly_stats:trip_completed"
         ],
     ).to_df()
 
