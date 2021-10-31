@@ -13,7 +13,7 @@ import joblib
 
 from google.cloud import bigquery
 
-from feast_sandbox.utils import DataSourceType
+from feast_sandbox.utils import RepoType
 
 
 PROJECT_NAME = "integral-server-329913"
@@ -96,13 +96,13 @@ def get_last_timestamp(table_name: str, field_name: str, conn_str: str) -> Optio
     return last_datetime
 
 
-def process_fraud_tutorial(datasource_type: DataSourceType):
+def process_fraud_tutorial(repo_type: RepoType):
     cur_dir_path = Path(__file__).absolute().parent
 
     # Let's select all transactions for two last days back from last transaction..
-    if datasource_type == DataSourceType.PARQUET:
+    if repo_type == RepoType.PARQUET:
         raise NotImplementedError("PARQIET repo is not supported yet for this tutorial")
-    elif datasource_type == DataSourceType.BIGQUERY:
+    elif repo_type == RepoType.BIGQUERY:
         last_timestamp = get_last_timestamp("feast-oss.fraud_tutorial.transactions", "timestamp",
                                             f"bigquery://{PROJECT_NAME}")
         entity_df_selection_str = f"""
@@ -110,7 +110,7 @@ def process_fraud_tutorial(datasource_type: DataSourceType):
             from feast-oss.fraud_tutorial.transactions
             where
                 timestamp > timestamp('{(last_timestamp - timedelta(days=2)).isoformat()}')"""
-    elif datasource_type == DataSourceType.HIVE:
+    elif repo_type == RepoType.HIVE:
 
         last_timestamp = get_last_timestamp("transactions", "feature_timestamp",
                                             'hive://localhost:10000/fraud_tutorial')
@@ -126,7 +126,7 @@ def process_fraud_tutorial(datasource_type: DataSourceType):
 
     # Getting training data from feature store...
     store = FeatureStore(
-        repo_path=str(cur_dir_path.parent.parent / f"repos/fraud_{datasource_type.name.lower()}_repo"))
+        repo_path=str(cur_dir_path.parent.parent / f"repos/fraud_{repo_type.name.lower()}_repo"))
 
     training_data = store.get_historical_features(
         entity_df=entity_df_selection_str,
@@ -168,4 +168,4 @@ def process_fraud_tutorial(datasource_type: DataSourceType):
 
 
 if __name__ == "__main__":
-    process_fraud_tutorial(datasource_type=DataSourceType.BIGQUERY)
+    process_fraud_tutorial(RepoType.HIVE)

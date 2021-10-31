@@ -12,9 +12,9 @@ from pathlib import Path
 cur_dir_path = Path(__file__).absolute().parent
 
 driver_hourly_stats = FileSource(
-    path=str(cur_dir_path / "data/driver_stats.parquet"),
+    path=str(cur_dir_path / "driver_stats.parquet"),
     event_timestamp_column="event_timestamp",
-    created_timestamp_column="created",
+    created_timestamp_column="created_timestamp",
 )
 
 # Define an entity for the driver. You can think of entity as a primary key used to

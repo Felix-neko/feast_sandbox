@@ -1,5 +1,5 @@
 from enum import Enum, IntEnum, unique, auto
-from typing import Optional, Dict
+from typing import Optional, Dict, Union
 
 from pathlib import Path
 
@@ -19,10 +19,19 @@ CHUNK_SIZE = 10000
 
 
 @unique
-class DataSourceType(IntEnum):
+class RepoType(IntEnum):
     PARQUET = auto()
     BIGQUERY = auto()
     HIVE = auto()
+
+
+def recreate_hive_db(db_name: str, engine_conn_str: str = "hive://localhost:10000"):
+    """
+    Creates new HIVE database (drops the old one if it already exists)
+    """
+    engine = create_engine(engine_conn_str)
+    engine.execute(f"DROP DATABASE IF EXISTS {db_name} CASCADE")
+    engine.execute(f"CREATE DATABASE {db_name}")
 
 
 def populate_table(df: pd.DataFrame, table_name: str, conn: Connection, engine: Engine):
@@ -49,8 +58,8 @@ def populate_table(df: pd.DataFrame, table_name: str, conn: Connection, engine: 
     print("Table complete")
 
 
-def download_bigquery_dataframe(table_name: str, dump_path: Optional[str] = None,
-                                field_name_map: Optional[Dict[str, str]] = None) -> pd.DataFrame :
+def download_data(table_name: str, dump_path: Optional[Union[str, Path]] = None,
+                  field_name_map: Optional[Dict[str, str]] = None) -> pd.DataFrame :
     bqclient = bigquery.Client()
     # Download query results.
     query_string = f"SELECT * FROM {table_name}"

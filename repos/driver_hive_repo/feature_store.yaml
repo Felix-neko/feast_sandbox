@@ -1,5 +1,5 @@
 project: driver_hive_repo
-registry: data/registry.db
+registry: registry.db
 provider: local
 
 offline_store:

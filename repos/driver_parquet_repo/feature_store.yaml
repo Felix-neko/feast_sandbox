@@ -1,10 +1,10 @@
 project: driver_parquet_repo
-registry: data/registry.db
+registry: registry.db
 provider: local
 
-#online_store:
-#    path: data/online_store.db
-
 online_store:
-  type: redis
-  connection_string: "localhost:6379"
+    path: online_store.db
+
+#online_store:
+#  type: redis
+#  connection_string: "localhost:6379"

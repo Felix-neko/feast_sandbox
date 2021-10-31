@@ -2,34 +2,22 @@
 Populates given HIVE base with our dataframe ``driver_data_parquet`` (table ``driver_stat``)
 """
 
+from pathlib import Path
 import pandas as pd
+from sqlalchemy import create_engine
 
-from sqlalchemy import MetaData, select, insert, func, Table, Column, Integer, String, DateTime, Float
-from sqlalchemy.engine import create_engine
-
-
-metadata_obj = MetaData()
-driver_stat_tbl = Table("driver_stat", metadata_obj,
-                        Column('event_timestamp', DateTime),
-                        Column('driver_id', Integer),
-                        Column('conv_rate', Float),
-                        Column('acc_rate', Float),
-                        Column('avg_daily_trips', Integer),
-                        Column('created_timestamp', DateTime)
-                        )
-
-
-def populate_hive_base(conn_string: str, drivers_dataframe: pd.DataFrame):
-    #TODO: check if base already populated
-    engine = create_engine(conn_string)
-    conn = engine.connect()
-    metadata_obj.create_all(engine)
-    stmt = driver_stat_tbl.insert(drivers_dataframe.to_dict(orient="records"))
-    conn.execute(stmt)
+from feast_sandbox.utils import populate_table, recreate_hive_db
 
 
 if __name__ == "__main__":
-    in_dataframe = pd.read_parquet("driver_data.parquet")
-    in_dataframe.rename(columns={"datetime": "event_timestamp", "created": "created_timestamp"}, inplace=True)
-    populate_hive_base('hive://localhost:10000/driver_tutorial', in_dataframe)
+    cur_dir_path = Path(__file__).absolute().parent
+
+    recreate_hive_db("driver_tutorial")
+
+    conn_string = 'hive://localhost:10000/driver_tutorial'
+    engine = create_engine(conn_string)
+    conn = engine.connect()
+
+    in_dataframe = pd.read_parquet(cur_dir_path.parent.parent / "repos/driver_parquet_repo/driver_stats.parquet")
+    populate_table(in_dataframe, "driver_stats", conn, engine)
 
