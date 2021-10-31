@@ -13,7 +13,7 @@ if __name__ == "__main__":
     parquet_paths = [elm for elm in (cur_dir_path.parent.parent / "repos/fraud_parquet_repo").iterdir()
                      if elm.is_file() and str(elm).endswith(".parquet")]
 
-    conn_string = 'hive://localhost:10000/fraud_tutorial'
+    conn_string = 'hive://localhost:10000/fraud_tutorial2'
     engine = create_engine(conn_string)
     conn = engine.connect()
 

@@ -1,13 +1,20 @@
-import os
+from typing import Optional
 from pathlib import Path
 import time
 from datetime import datetime, timedelta
 
+from sqlalchemy import create_engine, insert, select
+
 from sklearn.linear_model import LinearRegression
+
 from feast import FeatureStore
+
 import joblib
 
 from google.cloud import bigquery
+
+from feast_sandbox.utils import DataSourceType
+
 
 PROJECT_NAME = "integral-server-329913"
 BUCKET_NAME = "feast_fraud_bkt"
@@ -16,7 +23,7 @@ AI_PLATFORM_MODEL_NAME = "feast_fraud_mdl"
 
 
 def generate_user_count_features(aggregation_end_date):
-    table_id  = f"{PROJECT_NAME}.{BIGQUERY_DATASET_NAME}.user_count_transactions_7d"
+    table_id = f"{PROJECT_NAME}.{BIGQUERY_DATASET_NAME}.user_count_transactions_7d"
 
     client = bigquery.Client()
     job_config = bigquery.QueryJobConfig(destination=table_id, write_disposition='WRITE_APPEND')
@@ -73,68 +80,53 @@ def predict(model, store, entity_rows):
 
     return model.predict(instances)
 
-    # service = googleapiclient.discovery.build('ml', 'v1')
-    # name = f'projects/{PROJECT_ID}/models/{AI_PLATFORM_MODEL_NAME}'
 
-    # response = service.projects().predict(
-    #     name=name,
-    #     body={'instances': instances}
-    # ).execute()
-    #
-    # clear_output()
-    # return response
+def get_last_timestamp(table_name: str, field_name: str, conn_str: str) -> Optional[datetime]:
+    """
+    Returns latest timestamp from given table (by given field)
+    """
+    engine = create_engine(conn_str)
+    conn = engine.connect()
+
+    rows = conn.execute(f"SELECT {field_name} FROM {table_name} ORDER BY {field_name} DESC LIMIT 1")
+    results = rows.all()
+    if not results:
+        return None
+    last_datetime = results[0][0]
+    return last_datetime
 
 
-if __name__ == "__main__":
-
+def process_fraud_tutorial(datasource_type: DataSourceType):
     cur_dir_path = Path(__file__).absolute().parent
 
-    # os.system(f"gsutil mb gs://{BUCKET_NAME}")
-    # os.system(f"bq mk {BIGQUERY_DATASET_NAME}")
+    # Let's select all transactions for two last days back from last transaction..
+    if datasource_type == DataSourceType.PARQUET:
+        raise NotImplementedError("PARQIET repo is not supported yet for this tutorial")
+    elif datasource_type == DataSourceType.BIGQUERY:
+        last_timestamp = get_last_timestamp("feast-oss.fraud_tutorial.transactions", "timestamp",
+                                            f"bigquery://{PROJECT_NAME}")
+        entity_df_selection_str = f"""
+            select src_account as user_id, timestamp, is_fraud
+            from feast-oss.fraud_tutorial.transactions
+            where
+                timestamp > timestamp('{(last_timestamp - timedelta(days=2)).isoformat()}')"""
+    elif datasource_type == DataSourceType.HIVE:
 
-    # backfill_features(
-    #     earliest_aggregation_end_date=datetime.now() - timedelta(days=7), interval=timedelta(days=1), num_iterations=8)
+        last_timestamp = get_last_timestamp("transactions", "feature_timestamp",
+                                            'hive://localhost:10000/fraud_tutorial')
 
-    # Initialize a FeatureStore with our current repository's configurations
-    store = FeatureStore(repo_path=str(cur_dir_path.parent.parent / "repos/fraud_hive_repo"))
+        entity_df_selection_str = f"""
+            select src_account as user_id, feature_timestamp, is_fraud
+            from transactions
+            where
+                feature_timestamp >= unix_timestamp(\'{str(last_timestamp - timedelta(days=2))}\')
+            """
+    else:
+        assert False
 
-    # Get training data
-    now = datetime.now()
-    two_days_ago = datetime.now() - timedelta(days=2)
-
-    # training_data = store.get_historical_features(
-    #     entity_df=f"""
-    #     select
-    #         src_account as user_id,
-    #         timestamp,
-    #         is_fraud
-    #     from
-    #         feast-oss.fraud_tutorial.transactions
-    #     where
-    #         timestamp between timestamp('{two_days_ago.isoformat()}')
-    #         and timestamp('{now.isoformat()}')""",
-    #     features=[
-    #         "user_transaction_count_7d:transaction_count_7d",
-    #         "user_account_features:credit_score",
-    #         "user_account_features:account_age_days",
-    #         "user_account_features:user_has_2fa_installed",
-    #         "user_has_fraudulent_transactions:user_has_fraudulent_transactions_7d"
-    #     ],
-    #     full_feature_names=True
-    # ).to_df()
-
-    # print(training_data.head())
-
-    entity_df_selection_str = f"""
-        select 
-            src_account as user_id,
-            feature_timestamp,
-            is_fraud
-        from
-            transactions
-        where
-            feature_timestamp >= unix_timestamp('2021-10-28 00:27:07')
-        """
+    # Getting training data from feature store...
+    store = FeatureStore(
+        repo_path=str(cur_dir_path.parent.parent / f"repos/fraud_{datasource_type.name.lower()}_repo"))
 
     training_data = store.get_historical_features(
         entity_df=entity_df_selection_str,
@@ -173,3 +165,7 @@ if __name__ == "__main__":
     joblib.dump(model, "model.joblib")
     print("prediction: ")
     print(predict(model, store, [{"user_id": "v5zlw0"}]))
+
+
+if __name__ == "__main__":
+    process_fraud_tutorial(datasource_type=DataSourceType.BIGQUERY)

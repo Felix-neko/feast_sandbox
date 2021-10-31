@@ -833,6 +833,9 @@ python-versions = "*"
 [package.dependencies]
 future = "*"
 python-dateutil = "*"
+sasl = {version = ">=0.2.1", optional = true, markers = "extra == \"hive\""}
+thrift = {version = ">=0.10.0", optional = true, markers = "extra == \"hive\""}
+thrift_sasl = {version = ">=0.1.0", optional = true, markers = "extra == \"hive\""}
 
 [package.extras]
 hive = ["sasl (>=0.2.1)", "thrift (>=0.10.0)", "thrift_sasl (>=0.1.0)"]
@@ -1101,6 +1104,27 @@ pymysql = ["pymysql (<1)", "pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
+name = "sqlalchemy-bigquery"
+version = "1.2.1"
+description = "SQLAlchemy dialect for BigQuery"
+category = "main"
+optional = false
+python-versions = ">=3.6, <3.10"
+
+[package.dependencies]
+future = "*"
+google-api-core = ">=1.30.0"
+google-auth = ">=1.25.0,<3.0.0dev"
+google-cloud-bigquery = ">=2.25.2,<3.0.0dev"
+sqlalchemy = ">=1.2.0,<1.5.0dev"
+
+[package.extras]
+alembic = ["alembic"]
+all = ["pytz", "shapely", "geoalchemy2", "alembic", "packaging"]
+geography = ["geoalchemy2", "shapely"]
+tests = ["packaging", "pytz"]
+
+[[package]]
 name = "starlette"
 version = "0.16.0"
 description = "The little ASGI library that shines."
@@ -1327,7 +1351,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.8"
-content-hash = "ce94a77f3e6210a111498f20cce28618516a8d3171b1142a21ceb1073fbadee6"
+content-hash = "2b60dbd7db9377e90254bab9fba912f652d98efe912c03e14cf999feb8f101cc"
 
 [metadata.files]
 anyio = [
@@ -2225,6 +2249,10 @@ sqlalchemy = [
     {file = "SQLAlchemy-1.4.26-cp39-cp39-win32.whl", hash = "sha256:b86f762cee3709722ab4691981958cbec475ea43406a6916a7ec375db9cbd9e9"},
     {file = "SQLAlchemy-1.4.26-cp39-cp39-win_amd64.whl", hash = "sha256:5c6774b34782116ad9bdec61c2dbce9faaca4b166a0bc8e7b03c2b870b121d94"},
     {file = "SQLAlchemy-1.4.26.tar.gz", hash = "sha256:6bc7f9d7d90ef55e8c6db1308a8619cd8f40e24a34f759119b95e7284dca351a"},
+]
+sqlalchemy-bigquery = [
+    {file = "sqlalchemy-bigquery-1.2.1.tar.gz", hash = "sha256:65869d3f9dda58b27311433b027a6576b9b97331781e8e7f8481573984cc13f6"},
+    {file = "sqlalchemy_bigquery-1.2.1-py2.py3-none-any.whl", hash = "sha256:77a158624885765534463fe934c61e1774c779e58dc395b5de86bfbefcff3c60"},
 ]
 starlette = [
     {file = "starlette-0.16.0-py3-none-any.whl", hash = "sha256:38eb24bf705a2c317e15868e384c1b8a12ca396e5a3c3a003db7e667c43f939f"},

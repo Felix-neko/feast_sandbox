@@ -1,3 +1,4 @@
+from enum import Enum, IntEnum, unique, auto
 from typing import Optional, Dict
 
 from pathlib import Path
@@ -15,6 +16,13 @@ metadata_obj = MetaData()
 pd_to_sqla_dtypes = {np.dtype("int64"): Integer, np.dtype('O'): String, np.datetime64: DateTime,
                      np.dtype("float64"): Float, np.dtype('<M8[ns]'): DateTime}
 CHUNK_SIZE = 10000
+
+
+@unique
+class DataSourceType(IntEnum):
+    PARQUET = auto()
+    BIGQUERY = auto()
+    HIVE = auto()
 
 
 def populate_table(df: pd.DataFrame, table_name: str, conn: Connection, engine: Engine):
