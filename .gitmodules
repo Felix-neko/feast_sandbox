@@ -1,0 +1,4 @@
+[submodule "docker-hive"]
+	path = docker-hive
+	url = https://github.com/Felix-neko/docker-hive.git
+	branch = host_to_hdfs
