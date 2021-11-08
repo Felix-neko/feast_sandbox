@@ -1,3 +1,0 @@
-[submodule "docker-hive"]
-	path = docker-hive
-	url = https://github.com/big-data-europe/docker-hive.git
