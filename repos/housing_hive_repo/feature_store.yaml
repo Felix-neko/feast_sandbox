@@ -1,0 +1,19 @@
+project: housing_hive_repo
+registry: registry.db
+provider: local
+
+offline_store:
+    type: feast_hive.HiveOfflineStore
+    host: localhost
+    port: 10000
+    database: housing
+
+#    hive_conf:
+#        hive.strict.checks.cartesian.product: false
+
+online_store:
+    path: online_store.db
+
+#online_store:
+#  type: redis
+#  connection_string: "localhost:6379"
