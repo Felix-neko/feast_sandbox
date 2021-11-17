@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  hive-server:
+    volumes:
+      - ../docker_data/hdfs_data:/host_data
+  redis:
+    image: redis:latest
+    command: redis-server --save 60 1 --loglevel warning
+    ports:
+      - 127.0.0.1:6379:6379
+    volumes:
+      - ../docker_data/redis_data:/data
+
+volumes:
+  redis:
