@@ -1,6 +1,18 @@
 A  repo for FEAST debugging scripts for a test task
 (some feast tutorials are ported to Apache Hive offline store)
 
+=================================
+Starting local debug servers
+=================================
+Our sandbox has batteries included: we provide local Docker servers of Redis and Apache Hive.
+To start them, type
+
+``bash start_docker.sh``
+
+To stop, type
+
+``bash stop_docker.sh``
+
 =======================
 Driver rating tutorial
 =======================
