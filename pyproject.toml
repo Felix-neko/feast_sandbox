@@ -5,7 +5,7 @@ description = ""
 authors = ["Felix Neko <felix-neko@list.ru>"]
 
 [tool.poetry.dependencies]
-python = "3.8"
+python = ">=3.8, <3.10"
 pytest = "^6.2.5"
 
 SQLAlchemy = "^1.4.25"
@@ -20,7 +20,7 @@ impyla = "0.15"
 ply = "3.11"
 thriftpy2 = "0.4.0"
 assertpy = "^1.1"
-feast = {extras = ["redis", "gcp"], version = "^0.14.1"}
+feast = {extras = ["redis", "gcp"], version = "0.14.1"}
 grpcio = "^1.41.1"
 grpcio-tools = "^1.41.1"
 mypy-protobuf = "^3.0.0"
