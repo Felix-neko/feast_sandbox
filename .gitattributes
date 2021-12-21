@@ -1,0 +1,5 @@
+* -text # disables EOL auto-conversion
+
+[core]
+filemode = false  # disables filemode auto-conversion
+autocrlf = false  # disables EOL auto-conversion
