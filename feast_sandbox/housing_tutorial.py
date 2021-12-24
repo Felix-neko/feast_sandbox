@@ -27,7 +27,9 @@ if __name__ == "__main__":
         "buyer:age",
         "buyer:name",
         "buyer:yearly_income",
-        "mortgage:value"
+        "mortgage:name",
+        "mortgage:value",
+        "mortgage:due_date"
         ]
 
     store = feast.FeatureStore(str(cur_dir_path.parent / "repos/housing_hive_repo"))

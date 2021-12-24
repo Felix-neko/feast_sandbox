@@ -4,11 +4,16 @@ provider: local
 
 offline_store:
     type: feast_hive.HiveOfflineStore
-    host: quickstart-bigdata
+#    host: quickstart-bigdata
+#    port: 10000
+#    database: housing
+#    user: osboxes
+#    password: BaseUser@123
+
+
+    host: localhost
     port: 10000
     database: housing
-    user: osboxes
-    password: BaseUser@123
 
 #    hive_conf:
 #        hive.strict.checks.cartesian.product: false
