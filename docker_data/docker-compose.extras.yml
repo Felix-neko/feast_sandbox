@@ -5,7 +5,11 @@ services:
     volumes:
       - ../docker_data/hdfs_data:/host_data
     hostname: hive-server.docker
+    depends_on:
+      - dns
   redis:
+    depends_on:
+      - dns
     image: redis:latest
     command: redis-server --save 60 1 --loglevel warning
     ports:
@@ -16,6 +20,8 @@ services:
 
   namenode:
     hostname: namenode.docker
+    depends_on:
+      - dns
 
   dns:
     hostname: dns.mageddo

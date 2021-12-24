@@ -11,12 +11,13 @@ cur_dir_path = Path(__file__).absolute().parent
 if __name__ == "__main__":
     # print(pd.DataFrame.from_dict([{"id": 1, "hell": "star"}]).head())
 
-    timestamp = datetime.fromisoformat("2015-11-08")
-    print(timestamp)
+    timestamp1 = datetime.fromisoformat("2015-11-08")
+    timestamp2 = datetime.fromisoformat("2018-01-01")
 
     entity_df = pd.DataFrame.from_dict(
         [
-            {"house_id": 1, "buyer_id": 2, "event_timestamp": timestamp},
+            {"house_id": 1, "buyer_id": 2, "event_timestamp": timestamp1},
+            {"house_id": 2, "buyer_id": 2, "event_timestamp": timestamp2}
         ]
     )
 
