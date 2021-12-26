@@ -1,6 +1,6 @@
 DROP DATABASE housing CASCADE;
-CREATE DATABASE IF NOT EXISTS housing;
-USE housing;
+CREATE DATABASE IF NOT EXISTS housing2;
+USE housing2;
 
 CREATE TABLE house
 (
@@ -33,6 +33,7 @@ CREATE TABLE mortgage
     event_timestamp TIMESTAMP
 );
 
+
 INSERT INTO buyer VALUES
 (1, 'Jesus Christ', 33, 0, '2000-01-01'),
 (2, 'Vladimir Lenin', 54, 33000, '2001-01-01'),
@@ -42,6 +43,8 @@ INSERT INTO buyer VALUES
 
 INSERT INTO house VALUES
 (1, 'Winter Palace', 150, 1e6, 2e3, '1985-05-22'),
+(1, 'Winter Palace', 151, 2e6, 2e3, '1986-05-22'),
+(1, 'Winter Palace', 153, 3e6, 2e3, '1987-05-22'),
 (2, 'Uncle Tom''s Cabin', 20, 200, 12, '1994-12-31'),
 (3, 'The House Jack Built', 40, 2000, 30, '1998-10-10')
 ;
