@@ -13,13 +13,28 @@ services:
     image: redis:latest
     command: redis-server --save 60 1 --loglevel warning
     ports:
-      - 127.0.0.1:6379:6379
+      - 6379:6379
     volumes:
       - ../docker_data/redis_data:/data
     hostname: redis.docker
 
+  cassandra:
+    depends_on:
+      - dns
+    image: cassandra
+    hostname: cassandra.docker
+    volumes:
+      - ./data/cassandra:/var/lib/cassandra
+    ports:
+      - "9042:9042"
+
   namenode:
-    hostname: namenode.docker
+    hostname: namenode
+    depends_on:
+      - dns
+
+  hive-metastore:
+    hostname: hive-metastore.docker
     depends_on:
       - dns
 
@@ -29,6 +44,3 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/etc/resolv.conf:/etc/resolv.conf"
     image: defreitas/dns-proxy-server
-
-volumes:
-  redis:

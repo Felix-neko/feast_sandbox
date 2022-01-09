@@ -10,7 +10,7 @@ CREATE TABLE house
     price DOUBLE,
     floor_area DOUBLE,
     event_timestamp TIMESTAMP
-);
+) STORED AS PARQUET;
 
 CREATE TABLE buyer
 (
@@ -19,7 +19,7 @@ CREATE TABLE buyer
     age BIGINT,
     yearly_income DOUBLE,
     event_timestamp TIMESTAMP
-);
+) STORED AS PARQUET;
 
 CREATE TABLE mortgage
 (
@@ -31,7 +31,7 @@ CREATE TABLE mortgage
     house_id BIGINT,
     buyer_id BIGINT,
     event_timestamp TIMESTAMP
-);
+) STORED AS PARQUET;
 
 
 INSERT INTO buyer VALUES
