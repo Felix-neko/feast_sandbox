@@ -1,0 +1,13 @@
+project: timestamp_checkup_repo
+registry: registry.db
+provider: local
+
+offline_store:
+    type: feast_hive.HiveOfflineStore
+    host: quickstart-bigdata
+    port: 10000
+    database: timestamp_checkup
+    user: osboxes
+
+online_store:
+    path: online_store.db
