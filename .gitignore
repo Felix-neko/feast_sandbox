@@ -1,1 +1,9 @@
 /docker_data/docker-compose.yml
+
+
+.venv/
+venv/
+__pycache__/
+build/
+develop-eggs/
+dist/
