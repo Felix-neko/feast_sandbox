@@ -1,0 +1,46 @@
+
+K
++
+driver	driver id"driverJspark_tutorial
+‰âìÁ˜Áÿ‰âìÁ˜Áÿ
+E
+%
+__dummy"
+__dummy_idJspark_tutorial
+‰âìÁÈ×œ‘‰âìÁÈ×œ‘
+Q
+1
+customercustomer id"customerJspark_tutorial
+‰âìÁĞ¤º‘‰âìÁĞ¤º‘1"$4bb86743-05cd-481f-a574-4545736793be*¾ÚíÁ¨ŠÙf2´
+“
+customer_daily_profilespark_tutorialcustomer"
+current_balance"
+avg_passenger_count"
+lifetime_trip_count2€õ$:event_timestamp*createdŠOfeast.infra.offline_stores.contrib.spark_offline_store.spark_source.SparkSource¢customer_daily_profileÚ„ofile:///home/felix/Projects/feast_sandbox/repos/spark_tutorial/feature_repo/data/customer_daily_profile.parquet"parquet*%Y-%m-%d@
+‰âìÁ€¸Ø‘‰âìÁ€¸Ø‘2”
+ó
+driver_hourly_statsspark_tutorialdriver"
+	conv_rate"
+acc_rate"
+avg_daily_trips2€õ$:‰event_timestamp*createdŠOfeast.infra.offline_stores.contrib.spark_offline_store.spark_source.SparkSource¢driver_hourly_statsÚlfile:///home/felix/Projects/feast_sandbox/repos/spark_tutorial/feature_repo/data/driver_hourly_stats.parquet"parquet*%Y-%m-%d@
+‰âìÁ¸¿‡’‰âìÁ¸¿‡’:°
+
+driver_activityspark_tutorialå
+driver_hourly_stats
+	conv_rate
+acc_rate
+avg_daily_trips*created:createdB‰event_timestamp*createdŠOfeast.infra.offline_stores.contrib.spark_offline_store.spark_source.SparkSource¢driver_hourly_statsÚlfile:///home/felix/Projects/feast_sandbox/repos/spark_tutorial/feature_repo/data/driver_hourly_stats.parquet"parquet*%Y-%m-%dƒ
+customer_daily_profile
+current_balance
+avg_passenger_count
+lifetime_trip_count*created:createdBevent_timestamp*createdŠOfeast.infra.offline_stores.contrib.spark_offline_store.spark_source.SparkSource¢customer_daily_profileÚ„ofile:///home/felix/Projects/feast_sandbox/repos/spark_tutorial/feature_repo/data/customer_daily_profile.parquet"parquet*%Y-%m-%d
+‰âìÁøö³’‰âìÁøö³’RÛ
+m
+,feast.infra.online_stores.sqlite.SqliteTable"=
+data/online_store.db%spark_tutorial_customer_daily_profile
+j
+,feast.infra.online_stores.sqlite.SqliteTable":
+data/online_store.db"spark_tutorial_driver_hourly_statsb event_timestamp*createdŠOfeast.infra.offline_stores.contrib.spark_offline_store.spark_source.SparkSource¢customer_daily_profileªspark_tutorialÚ„ofile:///home/felix/Projects/feast_sandbox/repos/spark_tutorial/feature_repo/data/customer_daily_profile.parquet"parquet*%Y-%m-%dbševent_timestamp*createdŠOfeast.infra.offline_stores.contrib.spark_offline_store.spark_source.SparkSource¢driver_hourly_statsªspark_tutorialÚlfile:///home/felix/Projects/feast_sandbox/repos/spark_tutorial/feature_repo/data/driver_hourly_stats.parquet"parquet*%Y-%m-%dŠ0
+
+spark_tutorial
+íáìÁĞÉ˜´íáìÁĞÉ˜´
