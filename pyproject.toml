@@ -1,33 +1,29 @@
-[tool.poetry]
+[project]
 name = "feast_sandbox"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
-authors = ["Felix Neko <felix-neko@list.ru>"]
-
-[tool.poetry.dependencies]
-python = ">=3.8, <3.10"
-pytest = "^6.2.5"
-
-SQLAlchemy = "^1.4.25"
-PyHive = {extras = ["hive"], version = "^0.6.4"}
-sasl = "^0.3.1"
-thrift-sasl = "^0.4.3"
-sqlacodegen = "^2.3.0"
-scikit-learn = "^1.0"
-parquet-tools = "^0.2.9"
-bitarray = "^2.3.4"
-impyla = "0.15"
-ply = "3.11"
-thriftpy2 = "0.4.0"
-assertpy = "^1.1"
-feast = {extras = ["redis"], version = "^0.16.1"}
-grpcio = "^1.41.1"
-grpcio-tools = "^1.41.1"
-mypy-protobuf = "^3.0.0"
-google-cloud-bigquery = "^2.29.0"
-sqlalchemy-bigquery = "^1.2.1"
-
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+authors = [
+    {name = "Felix Neko", email = "felix-neko@list.ru"}
+]
+requires-python = ">=3.8,<=3.12"
+dependencies = [
+    "pytest>=6.2.5",
+    "SQLAlchemy>=1.4.25",
+    "PyHive[hive]>=0.6.4",
+    "sasl>=0.3.1",
+    "thrift-sasl>=0.4.3",
+    "sqlacodegen>=2.3.0",
+    "scikit-learn>=1.0",
+    "parquet-tools>=0.2.9",
+    "bitarray>=2.3.4",
+    "impyla==0.15",
+    "ply==3.11",
+    "thriftpy2==0.4.0",
+    "assertpy>=1.1",
+    "feast[redis]>=0.16.1",
+    "grpcio>=1.41.1",
+    "grpcio-tools>=1.41.1",
+    "mypy-protobuf>=3.0.0",
+    "google-cloud-bigquery>=2.29.0",
+    "sqlalchemy-bigquery>=1.2.1",
+]
